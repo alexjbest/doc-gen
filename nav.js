@@ -206,13 +206,17 @@ if (howabout) {
 
   const query = window.location.href.match(/[/]([^/]+)(?:\.html|[/])?$/)[1];
   declSearch(query).then((results) => {
-      howabout.innerText = 'How about one of these instead:';
-      const ul = howabout.appendChild(document.createElement('ul'));
-      for (const {decl} of results) {
-          const li = ul.appendChild(document.createElement('li'));
-          const a = li.appendChild(document.createElement('a'));
-          a.href = `${siteRoot}find/${decl}`;
-          a.appendChild(document.createElement('code')).innerText = decl;
+      if (results === undefined || results.length == 0) {
+        howabout.innerText = 'No results found';
+      } else {
+        howabout.innerText = 'How about one of these instead:';
+        const ul = howabout.appendChild(document.createElement('ul'));
+        for (const {decl} of results) {
+            const li = ul.appendChild(document.createElement('li'));
+            const a = li.appendChild(document.createElement('a'));
+            a.href = `${siteRoot}find/${decl}`;
+            a.appendChild(document.createElement('code')).innerText = decl;
+      }
       }
   });
 }
